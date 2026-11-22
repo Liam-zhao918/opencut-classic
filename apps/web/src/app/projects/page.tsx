@@ -103,6 +103,10 @@ export default function ProjectsPage() {
 		}
 	}, [editor.project]);
 
+	useEffect(() => {
+		(window as any).__opencut = editor;
+	}, [editor]);
+
 	return (
 		<div className="bg-background min-h-screen">
 			<MigrationDialog />

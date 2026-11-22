@@ -26,3 +26,6 @@ target/
 .cargo-tools/
 
 rust-migration-notes.md
+# Local deployment runtime and browser data
+.local-runtime/
+.local/

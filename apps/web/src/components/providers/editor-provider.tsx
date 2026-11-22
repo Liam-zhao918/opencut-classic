@@ -14,6 +14,12 @@ import {
 	initializeGpuRenderer,
 	isGpuAvailable,
 } from "@/services/renderer/gpu-renderer";
+import { usePanelStore } from "@/editor/panel-store";
+import { usePreviewStore } from "@/preview/preview-store";
+import { useSoundsStore } from "@/sounds/sounds-store";
+import { useStickersStore } from "@/stickers/stickers-store";
+import { useAssetsPanelStore } from "@/components/editor/panels/assets/assets-panel-store";
+import { usePropertiesStore } from "@/components/editor/panels/properties/stores/properties-store";
 
 interface EditorProviderProps {
 	projectId: string;
@@ -150,5 +156,22 @@ function EditorRuntimeBindings() {
 
 	useEditorActions();
 	useKeybindingsListener();
+
+	// opencut-controller:patched
+	useEffect(() => {
+		const w = window as any;
+		w.__opencut = editor;
+		w.__stores = {
+			panel: usePanelStore,
+			preview: usePreviewStore,
+			sounds: useSoundsStore,
+			stickers: useStickersStore,
+			assets: useAssetsPanelStore,
+			properties: usePropertiesStore,
+			keybindings: useKeybindingsStore,
+			timeline: useTimelineStore,
+		};
+	}, [editor]);
+
 	return null;
 }
